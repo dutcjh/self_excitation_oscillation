@@ -121,6 +121,10 @@ set(handles.current_imag,'XAxisLocation','top');
 set(handles.current_imag,'YDir','reverse');
 grid on;
 
+axes(handles.circuit);%用axes命令设定当前操作的坐标轴是circuit
+img_src=imread('circuit.png'); %读取电路图
+imshow(double(img_src)./255);%用imread读入图片，并用imshow在circuit上显示
+    
 setappdata(handles.mainwin,'breakpoint',1);%清除后从1开始绘图
 setappdata(handles.mainwin,'pauseflag',-1); %清除后为开始绘图
 set(handles.allplot,'String','开始绘图');
@@ -136,14 +140,18 @@ hand2 = [handles.us,handles.res1,handles.capa];
 fg = getappdata(handles.mainwin,'pauseflag');
 if fg == 0
     setappdata(handles.mainwin,'pauseflag',1); 
-    
+    axes(handles.circuit);%用axes命令设定当前操作的坐标轴是circuit
+    img_src=imread('circuit.png'); %读取电路图
+    imshow(double(img_src)./255);%用imread读入图片，并用imshow在circuit上显示
     plotimag(handles,1);
     set(hObject,'String','继续');
     set(handles.clearimag,'Enable','on');
     set(hand2,'Enable','on');
 else
     setappdata(handles.mainwin,'pauseflag',0); 
-    
+    axes(handles.circuit);%用axes命令设定当前操作的坐标轴是circuit
+    img_src=imread('circuit2.png'); %读取电路图2
+    imshow(double(img_src)./255);%用imread读入图片，并用imshow在circuit上显示
     set(hObject,'String','暂停');
     set(handles.clearimag,'Enable','off');
     set(hand2,'Enable','inactive');
