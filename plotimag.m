@@ -26,22 +26,23 @@ c1 =0;
 a2 =-10;
 b2 =-0.02;
 c2 =0.35;
-if flag == 1
-%     [ax,bx,cx] = find_line1(1j*Ue,Pe);
-%     Pf =find_intersection([a1,b1,c1],[ax,bx,cx]);
-    draw_line(1j*Ub,Pd,'r--',2);
-    draw_line(1j*Ue,Pe,'r--',2);
-    Pf = 0.0017 + 5j;
-    midob = 0.0033 +10j;
-    draw_arrow(Pf,midob,1,'k',1.5,3);
-    mided = 0.0275 +10j;
-    draw_arrow(Pd,mided,1,'k',1.5,3);
-    midbd = 0.0175 +15j;
-    midbd2 = 0.015 +15j;
-    draw_arrow(midbd2,midbd,2.5,'r',1.5,3);
-    midef = 0.0133 + 5j;
-    midef2 = 0.011 + 5j;
-    draw_arrow(midef,midef2,2.5,'r',1.5,3);
+switch flag
+    case 1
+        arrow1();
+        arrow2();
+        arrow3();
+        arrow4();
+    case 2 % 向上不循环
+        arrow1();
+        arrow2();
+        arrow5(); 
+    case 3 %向下循环
+        arrow1();
+        arrow2();
+        arrow3();
+    case 4
+        arrow1();
+    otherwise;
 end
 Us = str2double(get(handles.us,'String'));
 R1 = str2double(get(handles.res1,'String'));
@@ -71,3 +72,39 @@ xlabel('电流i2/A');
 ylabel('电压u2/V');
 ylim([0,Us+5]);
 grid on;
+
+function arrow1()
+Pf = 0.0017 + 5j;
+midob = 0.0033 +10j;
+draw_arrow(Pf,midob,1,'k',1.5,3);
+
+function arrow2()
+Ud=15; Id=30e-3;
+Pd = Id+1j*Ud;
+draw_line(1j*Ud,Pd,'r--',2);
+midbd = 0.0175 +15j;
+midbd2 = 0.015 +15j;
+draw_arrow(midbd2,midbd,2.5,'r',1.5,3);
+
+function arrow3()
+Ud=15; Id=30e-3;
+Pd = Id+1j*Ud;
+Ue=5;Ie=25e-3;
+Pe = Ie+1j*Ue;
+mided = Pd+(Pe-Pd)/4;
+draw_arrow(Pd,mided,2,'k',1.5,3);
+
+function arrow4()
+Ue=5; Ie=25e-3;
+Pe = Ie+1j*Ue;
+draw_line(1j*Ue,Pe,'r--',2);
+midef = 0.0133 + 5j;
+midef2 = 0.011 + 5j;
+draw_arrow(midef,midef2,2.5,'r',1.5,3);
+
+function arrow5()
+Ud=15; Id=30e-3;
+Pd = Id+1j*Ud;
+p1 = 0.036 +27j;
+pend = Pd+(p1-Pd)/4;
+draw_arrow(Pd,pend,2,'k',1.5,3);
